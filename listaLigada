@@ -1,0 +1,273 @@
+public class linkedList {
+    private Node head;
+    private Node tail;
+    private int length;
+    class Node{
+        int value;
+        Node next;
+        public Node(int value){
+            this.value=value;
+        }
+    }
+    public linkedList (int value){
+        Node newNode=new Node(value);
+        length=1;
+        head=newNode;
+        tail=newNode;
+    }
+    public void getHead(){
+        System.out.println("Head:" + head.value);
+    }
+    public void getTail(){
+        System.out.println("Tail:" + tail.value);
+    }
+    public void getLength(){
+            System.out.println("Length:" + length);
+    }
+    public void append(int value){
+        if(length==0){
+            Node newNode=new Node(value);
+            length=1;
+            head=newNode;
+            tail=newNode;
+            return;
+        }
+        Node newNode=new Node(value);
+        tail.next=newNode;
+        tail=newNode;
+        length++;
+    }
+    public void printList(){
+        Node temp=head;
+        while(temp!=null){
+            System.out.println(temp.value);
+            temp=temp.next;
+        }
+    }
+    public Node removeLast(){
+        if(length==0){
+            return null;
+        }
+        Node temp=head;
+        Node pre=head;
+        while(temp.next!=null){
+            pre=temp;
+            temp=temp.next;
+        }
+        tail=pre;
+        tail.next=null;
+        length--;
+        if(length==0){
+            head=null;
+            tail=null;
+        }
+        return temp;
+    }
+    
+    //pappeed agregar un nodo despues del primero
+        public void preapend(int dato) 
+        {
+            //Primero verifica si la head es null 
+            if (head==null) 
+            {
+                return;
+            }
+            //despues crea un nuevo nodo
+            Node newNode=new Node(dato);
+            //El nuevo nodo apunta ahora donde apuntaba el otro
+            newNode.next=head.next;
+            head.next=newNode; //ahora el head node apunta al nuevo nodo
+            length++; //se aumenta el elemento de la lista
+            if (newNode.next==null) // si el nuevo nodo es el ultimo, el nuevo ahora es la tail(cola) 
+            {
+                tail=newNode; 
+            }
+        }
+    
+    /*removeFirst Eliminar 1er nelemento de la lista- regresa el que elimino
+        tiene varios elementos
+        lista vacia
+        hay un solo elemento
+    */
+        public Node removeFirst()
+        {
+            //Primero verifica si la head es null 
+            if(length==0)
+            {
+                return null;
+            }
+            //se crea una variable que apunta a la head
+            Node temp=head;
+            head=head.next; // se desplaza la head al siguiente nodo
+            temp.next=null; //ahora se rompe el enlace del nodo eliminado
+            length--; //se resta un elemento de lista
+            
+            if(length==0)
+            {
+                tail=null;
+            }
+            return temp; //devuelve el nodo eliminado
+        }
+    
+    
+    //Método get regresar el nodo public Node get(int index)
+        public Node get(int index) 
+        {
+            //valida si el indix está fuera de los limites de la lista
+            if(index<0 || index>=length) 
+            {
+                return null;
+            }
+            Node temp=head; //se crea una variable que apunta a la head
+            for(int i=0; i<index; i++) //recorre la lista de nodo en nodo hasta llegar al solicitado
+            {
+                temp=temp.next; //avanza al siguiente nodo
+            }
+            return temp; //regresa el no que se pide
+        }
+
+    //Método set - public boolean set(int index, int value)
+        public boolean set(int index, int value) 
+        {
+            Node temp=get(index); // se reutiliza el metodo get para buscar para buscar el nodo en el inidice
+            if (temp!=null)
+            {
+                temp.value=value; // se asigna el nuevo valor al nodod
+                return true; 
+            }
+            return false; // si el nodo no exixte se regresa false
+        } 
+ 
+        //busca el nodo del medio 
+        /*Restricciones
+          no se puede modificar
+          no se puede udar lenght
+          solo se puede recorrer una vez
+        */
+        public Node enMedio()
+        {
+            //lista vacia no se encuentra ningun centro
+            if(head==null)
+            {
+                return null;
+            }
+            Node A=head; //puntero 1 que va de 1 en 1
+            Node B=head; //puntero 2 que va de 2 en 2 
+            while(null!=B && B.next!=null) //si el puntero 2 no apunta a null
+            {
+                A=A.next; //avanza 1
+                B=B.next.next;//avanza 2
+            }
+            return A; //cundo el puntero 2 llega a null el puntero 1 es el centro
+        }
+        
+        //saber si se cicla o no
+        public Node ciclo()
+        {
+          //lista vacia no se encuentra ningun ciclo
+          if(head==null)
+            {
+                return null;
+            }
+            Node A=head; //puntero 1 
+            Node B=head; //puntero 2 
+            //para buscar si A y B chocan
+            while(B!=null && B.next!=null)
+            {
+                A=A.next; //que va de 1 en 1
+                B=B.next.next; //que va de 1 en 1
+                
+                //si A y B se encuentran se significa que hay un ciclo
+                if(A==B)
+                {
+                    //crea un nodo para saber donde se ncuentra el ciclo
+                    Node C=head;
+                    while(C!=A) //avanzan a la hasta encontrarse
+                    {
+                        C=C.next;
+                        A=A.next;
+                    }
+                    return C; //y regresa el nodo donde se cicla
+                }
+            }
+            return null; //si el puntero 2 llega a null es que nos e cicla
+        }
+        
+        //Revertir la lista
+        /*Restricciones
+          solo se puede usar una lista
+          solo se puede recorrer una vez */
+        public Node reverse()
+        {
+            //si la lista tiene 0 o 1 nodos ya está "invertida"
+            if(length<=1)
+            {
+                return head;
+            }
+            Node temp=head; //guarda la head en una variable
+            head=tail; //ahora la cabeza(head) va ser la cola(tail)
+            tail=temp; //y la cola apunta a lo que era la cabeza
+            
+            Node A=null; //guarda el nodo que sigue en la lista original
+            Node B=null; //guara el nodo previo 
+            
+            //recorre la lista
+            for(int i=0; i<length; i++) 
+            {
+                A=temp.next; //guarda el resto de la lista
+                temp.next=B; //invierte y apunta hacia atras
+                B=temp; //mueve el puntero al nodo actual
+                temp=A; // avanza al siguiente nodo 
+            }
+            return head; //regresa el head de la lista invertida
+        }
+        
+        public Node insert(int index, int value)
+        {
+           if (index < 0 || index > length) return null;
+        
+            if (index==0) 
+            {
+                Node newNode=new Node(value);
+                newNode.next=head;
+                head=newNode;
+                if (length == 0) tail = newNode;
+                length++;
+                return newNode;
+            }
+            if (index == length) 
+            {
+                append(value);
+                return tail;
+            }
+
+            Node newNode = new Node(value);
+            Node temp = get(index - 1);
+
+            newNode.next = temp.next;
+            temp.next = newNode;
+            length++;
+            return newNode;
+        }
+        
+        public Node remove(int index)
+        {
+            //valida si el indice esta dentro del rango para eliminar
+            if (index<0 || index>=length) return null;
+            //caso 1: eliminar el primer nodo
+            if (index==0) return removeFirst();
+            //caso 2: eliminar el último nodo
+            if (index==length-1) return removeLast();
+
+            Node prev=get(index-1); //obtiene el nodo anterior al que queremos borrar
+            Node temp=prev.next; //el nodo que se va eliminar
+
+            prev.next=temp.next;//el nodo anterior salta al nodo que seguia después del eliminado
+            temp.next=null; //desconecta el nodo eliminado
+            length--; //reduce el tamaño
+            return temp; //regresa el nodo eliminado
+        }
+        
+}
+                  
+   
