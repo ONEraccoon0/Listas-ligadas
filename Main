@@ -1,0 +1,86 @@
+
+public class linkedlist26 {
+
+    
+    public static void main(String[] args) {
+        
+        linkedList ll=new linkedList(10);
+        ll.append(20);
+        ll.append(30);
+        ll.append(40);
+        ll.append(50);
+        System.out.println("Lista inicial");
+        ll.printList();
+        System.out.print("\n");
+        
+        System.out.println("-----removeLast: Eliminando el ultimo 50-----");
+        System.out.println( ll.removeLast().value + "\n");
+        /*System.out.println("Probando REMOVE 40");
+        System.out.println( ll.removeLast().value );
+        System.out.println("Probando REMOVE 30");
+        System.out.println( ll.removeLast().value );
+        System.out.println("Probando REMOVE 20");
+        System.out.println( ll.removeLast().value );
+        System.out.println("Probando REMOVE 10");
+        System.out.println( ll.removeLast().value );
+       
+        System.out.println("Probando REMOVE vacio");
+        System.out.println( ll.removeLast() );*/
+      
+        System.out.println("-----removeFirst: Eliminando el primero-----");
+        System.out.println( ll.removeFirst().value + "\n");
+        
+        System.out.println("-----preapend: Agregar un nodo 25 despues del primero-----");
+        
+        System.out.println("Lista inicial");
+        ll.printList();
+        ll.preapend(25);
+        System.out.println("Lista final");
+        ll.printList();
+        System.out.print("\n");
+        
+        System.out.println("------El Metodo get------");
+        System.out.println("Busca el Nodo en la posicion 2: ");
+        System.out.println(ll.get(2).value + "\n");
+        
+        System.out.println("------El Metodo set------");
+        System.out.println("modifica el nodo de la posicion 3 por 35: ");
+        ll.set(3, 35);
+        ll.printList();
+        System.out.print("\n");
+
+        
+        System.out.println("-----Metodo que regresa el nodo de en medio-----");
+        System.out.println(ll.enMedio().value + "\n" );
+        
+        System.out.println("-----Metodo que verifica si se cicla la lista o no-----");
+        if (ll.ciclo()==null) 
+        {
+            System.out.println("No se cicla");
+        } 
+        else 
+        {
+            System.out.println("Sí se cicla.");
+        }
+        System.out.print("\n");
+        
+        System.out.println("-----Metodo de revertir Lista-----");
+        ll.reverse();
+        ll.printList();
+        System.out.print("\n");
+        
+        System.out.println("------El Metodo Insert------");
+        System.out.println("Inserta un nuevo nodo en la posocion 2: ");
+        ll.insert(2, 50);
+        ll.printList();
+        System.out.print("\n");
+        
+        System.out.println("------El Metodo Remove------");
+        System.out.println("Elimina el nodo de la posicion 2: ");
+        
+        System.out.println(ll.remove(2).value);
+        System.out.println("Lista final");
+        ll.printList();
+    }
+    
+}
